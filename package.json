@@ -1,0 +1,24 @@
+{
+    "name": "sql-model",
+    "version": "1.0.0",
+    "description": "crear representaciones de tablas sql en  modelos de datos ",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha ./test/index.js",
+        "lint": "eslint ./index.js ./model2Sql.js ./sql2Model.js ./sqlHelpers.js"
+    },
+    "keywords": [
+        "sql",
+        "modelos"
+    ],
+    "author": "enyerverfranco@gmail.com",
+    "license": "MIT",
+    "devDependencies": {
+    "eslint": "^5.9.0",
+    "mocha": "^5.2.0"
+    },
+    "dependencies":
+    {
+        "sqlstring":"^2.3.1"
+    }
+}
