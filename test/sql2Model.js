@@ -23,7 +23,7 @@ describe("Test de la clase sql2Model",()=>
                     defaultNull:false,
                     primary:false,
                     unique:false,
-                    defaul:"ever"
+                    defaul:"'ever'"
                 },
                 {
                     name:"row2",
@@ -73,7 +73,7 @@ describe("Test de la clase sql2Model",()=>
                     defaultNull:false,
                     primary:false,
                     unique:false,
-                    defaul:"ever"
+                    defaul:"'ever'"
                 },
                 {
                     name:"row2",

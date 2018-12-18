@@ -42,7 +42,7 @@ class model2Sql
         }
         if(colum.default!==undefined)
         {
-            sql+=` DEFAULT ${this.__helpers.__formatVarInsert(colum.default)}`
+            sql+=` DEFAULT ${colum.default}`
         }
         if(colum.autoincrement && this.__typeDB===sqlHelpers.MYSQL_DB)
         {

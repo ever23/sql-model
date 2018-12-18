@@ -77,7 +77,7 @@ function sql2Model(sqlTable,escapeChar="")
                 defaultNull:typeof ex[4]==="string" && ex[4].toLowerCase()=="null",
                 primary:false,
                 unique:false,
-                defaul:typeof ex[7]==="string"?ex[7].replace(/^'(.*)'$/,"$1"):""
+                defaul:typeof ex[7]==="string"?ex[7]:""
             })
             
         }

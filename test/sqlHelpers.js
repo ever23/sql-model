@@ -43,6 +43,8 @@ describe("Test de la clase sqlHelpers",()=>
         assert.equal(helper.__escapeIdentifiers("row1"),"`row1`")
         assert.equal(helper.__escapeIdentifiers("row1.a"),"`row1`.`a`")
         assert.equal(helper.__escapeIdentifiers("row1.*"),"`row1`.*")
+        assert.equal(helper.__escapeIdentifiers("a.b.c"),"`a`.`b`.`c`")
+         assert.equal(helper.__escapeIdentifiers("`row1`"),"`row1`")
 
     })
     it("metodo __protectIdentifiers",()=>
@@ -52,12 +54,17 @@ describe("Test de la clase sqlHelpers",()=>
         assert.deepEqual(helper.__protectIdentifiers(["row1","row2"]),["`row1`","`row2`"])
         //assert.equal(helper.__escapeIdentifiers("row1.a"),'`row1`.`a`')
     })
-
+    it("metodo __protectIdentifiersBolean",()=>
+    {
+        let helper = new sqlHelpers(config)
+        assert.equal(helper.__protectIdentifiersBolean("row1=1 or row2 = 'a' and tab.row3=ab"),"`row1`=1 or `row2`='a' and `tab`.`row3`=ab")
+        
+    })
     it("metodo __campos",()=>
     {
         let helper = new sqlHelpers(config)
-        let params=["row1","row2","row3.a","count(*) as e"]
-        assert.equal(helper.__campos(params),"`row1`,`row2`,`row3`.`a`,count(*) as `e`")
+        let params=["row1","row2","row3.a","count(*) as e","count(row1) as a"]
+        assert.equal(helper.__campos(params),"`row1`,`row2`,`row3`.`a`,count(*) as `e`,count(row1) as `a`")
     })
     it("metodo __formatVarInsert",()=>
     {
@@ -84,10 +91,6 @@ describe("Test de la clase sqlHelpers",()=>
         assert.equal(helper.__formatVarSelet(null),"IS NULL")
 
     })
-    it("metodo __protectIdentifiersBolean",()=>
-    {
-        let helper = new sqlHelpers(config)
-        assert.equal(helper.__protectIdentifiersBolean("row1=1 or row2 = 'a' and tab.row3=ab"),"`row1`=1 or `row2`='a' and `tab`.`row3`=ab")
-    })
+    
 
 })

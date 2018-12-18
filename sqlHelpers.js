@@ -139,20 +139,20 @@ class  sqlHelpers
         {
             if (item.indexOf("."+id) !== -1)
             {
-                str=this.__escapeChar+item.replace(".",this.__escapeChar+".")
-                return str.replace(new RegExp("[" + this.__escapeChar + "]+"),this.__escapeChar)
+                str=this.__escapeChar+item.replace(/\./g,this.__escapeChar+".")
+                return str.replace(new RegExp("[" + this.__escapeChar + "]+","g"),this.__escapeChar)
             }
         }
 
         if(item.indexOf(".")!==-1)
         {
             //console.log(item.replace('.',this.__escapeChar+'.'+this.__escapeChar))
-            str=this.__escapeChar+item.replace(".",this.__escapeChar+"."+this.__escapeChar)+this.__escapeChar
+            str=this.__escapeChar+item.replace(/\./g,this.__escapeChar+"."+this.__escapeChar)+this.__escapeChar
         }else {
             str=this.__escapeChar+item+this.__escapeChar
         }
 
-        return str.replace(new RegExp("[" + this.__escapeChar + "]+"),this.__escapeChar)
+        return str.replace(new RegExp("[" + this.__escapeChar + "]+","g"),this.__escapeChar)
 
     }
     /**
@@ -195,7 +195,7 @@ class  sqlHelpers
         // Convert tabs or multiple spaces into single spaces
         if(typeof item !=="string")
             return item
-        item = item.replace(/[\t ]+/," ")
+        item = item.replace(/[\t ]+/g," ")
         // If the item has an alias declaration we remove it and set it aside.
         // Basically we remove everything to the right of the first space
         let alias=""
@@ -267,7 +267,7 @@ class  sqlHelpers
                 // Verify table prefix and replace if necessary
                 if(this.__swap_pre!=="" && parts[i].slice(0,this.__swap_pre)===this.__swap_pre)
                 {
-                    parts[i]=parts[i].replace(new RegExp("/^" + this.__swap_pre + "(\\S+?)/"),this.__dbprefix+"\\1")// o $1
+                    parts[i]=parts[i].replace(new RegExp("/^" + this.__swap_pre + "(\\S+?)/","g"),this.__dbprefix+"\\1")// o $1
                 }
                 // We only add the table prefix if it does not already exist
 
@@ -295,7 +295,7 @@ class  sqlHelpers
             // Verify table prefix and replace if necessary
             if(this.__swap_pre!=="" && item.slice(0,this.__swap_pre)===this.__swap_pre)
             {
-                item=item.replace(new RegExp("/^" + this.__swap_pre + "(\\S+?)/"),this.__dbprefix+"\\1")// o $1
+                item=item.replace(new RegExp("/^" + this.__swap_pre + "(\\S+?)/","g"),this.__dbprefix+"\\1")// o $1
             }
             // Do we prefix an item with no segments?
             if(prefix_single===true  && item.slice(0,this.__dbprefix.length)!==this.__dbprefix)

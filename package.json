@@ -1,6 +1,6 @@
 {
     "name": "sql-model",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "crear representaciones de tablas sql en  modelos de datos ",
     "main": "index.js",
     "scripts": {
