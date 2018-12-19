@@ -46,24 +46,49 @@ class  sqlHelpers
                 operator=/^(\|\|)/.test(i)?"OR":"AND"
                 text+=` ${operator} `//+ ' and '
             }
-            let identifier=i.replace(/^(&&|\|\|)/,"").replace(/(=|\<|\>|\<\=|\>\=|\!\=|%)$/,"")
-            let Regcomparation=/(=|\<|\>|\<\=|\>\=|\!=|%)$/.exec(i)
+            let identifier=i.replace(/^(&&|\|\|)/,"").replace(/(=|\<|\>|\<\=|\>\=|\!\=|%|\!)$/,"")
+            let Regcomparation=/(=|\<|\>|\<\=|\>\=|\!=|%|\!)$/.exec(i)
             let comparation="="
             if(Regcomparation instanceof Array && typeof Regcomparation[0]!=undefined)
             {
                  comparation=Regcomparation[0]==="%"?" LIKE ":Regcomparation[0]
+                 comparation=comparation==="!"?"!=":comparation
             }
 
             if(valores[i] instanceof Array)
             {
                 let v=[]
+                
                 for(let a in valores[i])
                 {
-                    v.push(this.__protectIdentifiers(identifier) + comparation + this.__formatVarInsert(valores[i][a]))
+                    let value=this.__formatVarInsert(valores[i][a])
+                    let comparation2=comparation
+                    if(value==='NULL')
+                    {
+                        if(comparation2=="=")
+                        {
+                             comparation2=" IS "
+                        }else if(comparation2=="!=")
+                        {
+                            comparation2=" IS NOT "
+                        }
+                    }
+                    v.push(this.__protectIdentifiers(identifier) + comparation2 + value)
                 }
                 text+=`(${v.join(" OR ")})`
             }else {
-                text+= this.__protectIdentifiers(identifier) + comparation + this.__formatVarInsert(valores[i])
+                let value=this.__formatVarInsert(valores[i])
+                if(value==='NULL')
+                {
+                    if(comparation=="=")
+                    {
+                         comparation=" IS "
+                    }else if(comparation=="!=")
+                    {
+                        comparation=" IS NOT "
+                    }
+                }
+                text+= this.__protectIdentifiers(identifier) + comparation + value
             }
 
         }

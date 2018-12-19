@@ -35,7 +35,9 @@ describe("Test de la clase sqlHelpers",()=>
         assert.equal(helper.__object2boleandSql({"id2>=":3}),"`id2`>=3")
         assert.equal(helper.__object2boleandSql({"id2<=":3}),"`id2`<=3")
         assert.equal(helper.__object2boleandSql({"id2%":"3s"}),"`id2` LIKE '3s'")
-
+        assert.equal(helper.__object2boleandSql({"id2":null}),"`id2` IS NULL")
+        assert.equal(helper.__object2boleandSql({"id2!=":null}),"`id2` IS NOT NULL")
+        assert.equal(helper.__object2boleandSql({id:[1,null,3],"id2":3}),"(`id`=1 OR `id` IS NULL OR `id`=3) AND `id2`=3")
     })
     it("metodo __escapeIdentifiers",()=>
     {
@@ -44,8 +46,6 @@ describe("Test de la clase sqlHelpers",()=>
         assert.equal(helper.__escapeIdentifiers("row1.a"),"`row1`.`a`")
         assert.equal(helper.__escapeIdentifiers("row1.*"),"`row1`.*")
         assert.equal(helper.__escapeIdentifiers("a.b.c"),"`a`.`b`.`c`")
-         assert.equal(helper.__escapeIdentifiers("`row1`"),"`row1`")
-
     })
     it("metodo __protectIdentifiers",()=>
     {
@@ -58,7 +58,6 @@ describe("Test de la clase sqlHelpers",()=>
     {
         let helper = new sqlHelpers(config)
         assert.equal(helper.__protectIdentifiersBolean("row1=1 or row2 = 'a' and tab.row3=ab"),"`row1`=1 or `row2`='a' and `tab`.`row3`=ab")
-        
     })
     it("metodo __campos",()=>
     {
@@ -76,8 +75,6 @@ describe("Test de la clase sqlHelpers",()=>
         assert.equal(helper.__formatVarInsert(3),"3")
         assert.equal(helper.__formatVarInsert(undefined),"NULL")
         assert.equal(helper.__formatVarInsert(null),"NULL")
-
-
     })
     it("metodo __formatVarSelet",()=>
     {
