@@ -28,7 +28,7 @@ class model2Sql
         {
             colum.type="serial"
         }
-        let sql =`${this.__helpers.__protectIdentifiers(colum.name)} ${colum.type}`
+        let sql =`${this.__helpers.protectIdentifiers(colum.name)} ${colum.type}`
         if(colum.defaultNull!==undefined)
             if(colum.defaultNull)
             {
@@ -57,7 +57,7 @@ class model2Sql
     */
     __primaryKeys(keys)
     {
-        let colums=this.__helpers.__protectIdentifiers(keys).join(",")
+        let colums=this.__helpers.protectIdentifiers(keys).join(",")
         return `PRIMARY KEY (${colums})`
     }
     /**
@@ -67,7 +67,7 @@ class model2Sql
     */
     __uniqueKeys(keys)
     {
-        let colums=this.__helpers.__protectIdentifiers(keys).join(",")
+        let colums=this.__helpers.protectIdentifiers(keys).join(",")
         return `UNIQUE (${colums})`
     }
     /**
@@ -77,7 +77,7 @@ class model2Sql
     */
     __indexKey(keys)
     {
-        let colums=this.__helpers.__protectIdentifiers(keys).join(",")
+        let colums=this.__helpers.protectIdentifiers(keys).join(",")
         return `INDEX (${colums})`
     }
     /**
@@ -91,18 +91,18 @@ class model2Sql
         let keyReference="",key=""
         if(keys.keyReference instanceof Array)
         {
-            keyReference=this.__helpers.__protectIdentifiers(keys.keyReference).join(",")
+            keyReference=this.__helpers.protectIdentifiers(keys.keyReference).join(",")
         }else {
-            keyReference=this.__helpers.__protectIdentifiers(keys.keyReference)
+            keyReference=this.__helpers.protectIdentifiers(keys.keyReference)
         }
         if(keys.key instanceof Array)
         {
-            key=this.__helpers.__protectIdentifiers(keys.key).join(",")
+            key=this.__helpers.protectIdentifiers(keys.key).join(",")
         }else {
-            key=this.__helpers.__protectIdentifiers(keys.key)
+            key=this.__helpers.protectIdentifiers(keys.key)
         }
-        let constrait=this.__helpers.__protectIdentifiers(`m2s_${tabla}_${keys.reference}_${numero}`)
-        let sql=`CONSTRAINT ${constrait} FOREIGN KEY (${key}) REFERENCES ${this.__helpers.__protectIdentifiers(keys.reference)} (${keyReference})`
+        let constrait=this.__helpers.protectIdentifiers(`m2s_${tabla}_${keys.reference}_${numero}`)
+        let sql=`CONSTRAINT ${constrait} FOREIGN KEY (${key}) REFERENCES ${this.__helpers.protectIdentifiers(keys.reference)} (${keyReference})`
         if(keys.match!==undefined)
         {
             sql+=` MATCH ${keys.match}`
@@ -167,7 +167,7 @@ class model2Sql
         let i=1
         for(let keys of data.foreingKey)
             colums.push(this.__foreingKey(data.tabla,keys,i++))
-        return `CREATE TABLE ${this.__helpers.__protectIdentifiers(data.tabla)} (${colums.join(",")});`
+        return `CREATE TABLE ${this.__helpers.protectIdentifiers(data.tabla)} (${colums.join(",")});`
     }
     /**
     * crea el sql nesesario para crea la tabla asociada al modelo pasado al constructor 

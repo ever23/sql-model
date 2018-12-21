@@ -24,17 +24,18 @@ class  sqlHelpers
         this.__ar_aliased_tables=config.ar_aliased_tables||[]
         this.__dbprefix=config.dbprefix||""
         this.__swap_pre=config.ar_aliased_tables||""
-
-        this.__escapeString=typeof config.escapeString==="function"?config.escapeString:s=>escapeDefault(s)
+        this.__escapeString=typeof config.escapeString==="function"?config.escapeString:escapeDefault
+        
     }
     /**
     * convierte un objeto en expreciones booleana sql de igualdad
     * si el nombre de un atributo comienza por ||usara operado OR con
     * el siguiente atributo por defecto usa el operado AND
     * @param {object} valores
+    * @param {object} literal
     * @return {string}
     */
-    __object2boleandSql(valores)
+    object2boleandSql(valores,literal=false)
     {
         let text = ""
         let operator=""
@@ -61,23 +62,23 @@ class  sqlHelpers
                 
                 for(let a in valores[i])
                 {
-                    let value=this.__formatVarInsert(valores[i][a])
+                    let value=literal?valores[i][a]:this.formatVarInsert(valores[i][a])
                     let comparation2=comparation
                     if(value==='NULL')
                     {
                         if(comparation2=="=")
                         {
-                             comparation2=" IS "
+                            comparation2=" IS "
                         }else if(comparation2=="!=")
                         {
                             comparation2=" IS NOT "
                         }
                     }
-                    v.push(this.__protectIdentifiers(identifier) + comparation2 + value)
+                    v.push(this.protectIdentifiers(identifier) + comparation2 + value)
                 }
                 text+=`(${v.join(" OR ")})`
             }else {
-                let value=this.__formatVarInsert(valores[i])
+                let value=literal?valores[i]:this.formatVarInsert(valores[i])
                 if(value==='NULL')
                 {
                     if(comparation=="=")
@@ -88,7 +89,7 @@ class  sqlHelpers
                         comparation=" IS NOT "
                     }
                 }
-                text+= this.__protectIdentifiers(identifier) + comparation + value
+                text+= this.protectIdentifiers(identifier) + comparation + value
             }
 
         }
@@ -100,7 +101,7 @@ class  sqlHelpers
     * @param {string} text - exprecion boleana sqlite
     * @return {string}
     */
-    __protectIdentifiersBolean(text)
+    protectIdentifiersBolean(text)
     {
         let regx=/((?!["'`])([\w]+)(?!["'`]) *(!=|>=|<=|=|>|<) *)|((?!["'`])([\w]+)(\.)([\w]+)(?!["'`])? *(!=|>=|<=|=|>|<) *)/g
 
@@ -152,7 +153,7 @@ class  sqlHelpers
     * @param {string} item
     * @return {string}
     */
-    __escapeIdentifiers(item)
+    escapeIdentifiers(item)
     {
         let str
 
@@ -188,7 +189,7 @@ class  sqlHelpers
     * @param {boolean} field_exists
     * @return {string}
     */
-    __protectIdentifiers(item, prefix_single = false, protect_identifiers = undefined, field_exists = true)
+    protectIdentifiers(item, prefix_single = false, protect_identifiers = undefined, field_exists = true)
     {
         if(typeof protect_identifiers!=="boolean")
         {
@@ -199,7 +200,7 @@ class  sqlHelpers
             let escaped_array=[]
             item.forEach((v)=>
             {
-                escaped_array.push(this.__protectIdentifiers(v))
+                escaped_array.push(this.protectIdentifiers(v))
 
             })
             return escaped_array
@@ -210,7 +211,7 @@ class  sqlHelpers
             for(let k in item)
             {
                 let v=item[k]
-                escaped_object[this.__protectIdentifiers(k)]=this.__protectIdentifiers(v)
+                escaped_object[this.protectIdentifiers(k)]=this.protectIdentifiers(v)
             }
             return escaped_object
         }
@@ -257,7 +258,7 @@ class  sqlHelpers
                     {
                         if(this.__reserveIdentifiers.find(i=>{return i===parts[key]})===undefined)
                         {
-                            parts[key]=this.__escapeIdentifiers(parts[key])
+                            parts[key]=this.escapeIdentifiers(parts[key])
                         }
                     }
                     item = parts.join(".")
@@ -309,7 +310,7 @@ class  sqlHelpers
             if(protect_identifiers ===true)
             {
 
-                item = this.__escapeIdentifiers(item)
+                item = this.escapeIdentifiers(item)
             }
 
             return item + alias
@@ -331,7 +332,7 @@ class  sqlHelpers
 
         if(protect_identifiers===true && this.__reserveIdentifiers.find(i=>{return i===item})===undefined)
         {
-            item = this.__escapeIdentifiers(item)
+            item = this.escapeIdentifiers(item)
         }
 
         return item + alias
@@ -341,14 +342,14 @@ class  sqlHelpers
     * @param {array} campos
     * @return {string}
     */
-    __campos(campos)
+    campos(campos)
     {
         let ret = []
         for(let i in campos)
         {
             if(!/\)\s+as\s+.*/.test(campos[i]))
             {
-                ret[i]=this.__protectIdentifiers(campos[i])
+                ret[i]=this.protectIdentifiers(campos[i])
             }else {
                 ret[i]=campos[i].replace(/\)\s+as\s+(.*)/,`) as ${this.__escapeChar}$1${this.__escapeChar}`)
             }
@@ -361,7 +362,7 @@ class  sqlHelpers
     * @param {string|number|bolean|null|undefined} v
     * @return {string}
     */
-    __formatVarInsert(result)
+    formatVarInsert(result)
     {
 
         //console.log(/\d{0,}\.?\d{0,?}/.test(v),v)
@@ -383,16 +384,20 @@ class  sqlHelpers
     * @param {string|number|bolean|null|undefined} v
     * @return {string}
     */
-    __formatVarSelet(v)
+    formatVarSelet(v)
     {
 
-        let result =this.__formatVarInsert(v)
+        let result =this.formatVarInsert(v)
         if(result==="NULL")
         {
             return "IS NULL"
         }
         return `=${result}`
 
+    }
+    parseSql(sql)
+    {
+        
     }
 }
 sqlHelpers.MYSQL_DB="mysql"
