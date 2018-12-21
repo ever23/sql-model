@@ -47,24 +47,22 @@ class  sqlHelpers
                 operator=/^(\|\|)/.test(i)?"OR":"AND"
                 text+=` ${operator} `//+ ' and '
             }
-            let identifier=i.replace(/^(&&|\|\|)/,"").replace(/(=|\<|\>|\<\=|\>\=|\!\=|%|\!)$/,"")
-            let Regcomparation=/(=|\<|\>|\<\=|\>\=|\!=|%|\!)$/.exec(i)
+            let identifier=i.replace(/^(&&|\|\|)/,"").replace(/(=|<|>|<=|>=|!=|%|!)$/,"")
+            let Regcomparation=/(=|<|>|<=|>=|!=|%|!)$/.exec(i)
             let comparation="="
             if(Regcomparation instanceof Array && typeof Regcomparation[0]!=undefined)
             {
-                 comparation=Regcomparation[0]==="%"?" LIKE ":Regcomparation[0]
-                 comparation=comparation==="!"?"!=":comparation
+                comparation=Regcomparation[0]==="%"?" LIKE ":Regcomparation[0]
+                comparation=comparation==="!"?"!=":comparation
             }
-
             if(valores[i] instanceof Array)
             {
                 let v=[]
-                
                 for(let a in valores[i])
                 {
                     let value=literal?valores[i][a]:this.formatVarInsert(valores[i][a])
                     let comparation2=comparation
-                    if(value==='NULL')
+                    if(value==="NULL")
                     {
                         if(comparation2=="=")
                         {
@@ -79,11 +77,11 @@ class  sqlHelpers
                 text+=`(${v.join(" OR ")})`
             }else {
                 let value=literal?valores[i]:this.formatVarInsert(valores[i])
-                if(value==='NULL')
+                if(value==="NULL")
                 {
                     if(comparation=="=")
                     {
-                         comparation=" IS "
+                        comparation=" IS "
                     }else if(comparation=="!=")
                     {
                         comparation=" IS NOT "
@@ -395,10 +393,7 @@ class  sqlHelpers
         return `=${result}`
 
     }
-    parseSql(sql)
-    {
-        
-    }
+    
 }
 sqlHelpers.MYSQL_DB="mysql"
 sqlHelpers.POSTGRESQL_DB="pg"
