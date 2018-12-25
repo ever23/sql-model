@@ -1,4 +1,4 @@
-describe("test de sql-model",()=>
+describe("test de tabla-model",()=>
 {
     require("./sqlHelpers")
     require("./sql2Model")

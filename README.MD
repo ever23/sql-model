@@ -1,4 +1,4 @@
-# dbTabla
+# tabla-model
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
@@ -12,26 +12,26 @@
 
 ## install
 
-sql-model es un  modulo de [Node.js](https://nodejs.org/es/) valido registrado en [npm registry](https://www.npmjs.com/).
+tabla-model es un  modulo de [Node.js](https://nodejs.org/es/) valido registrado en [npm registry](https://www.npmjs.com/).
 
 Para instalar use [`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
 
 ```sh
-$ npm install sql-model
+$ npm install tabla-model
 ```
 ## introduccion
 
-sql-model crear representaciones de tablas sql en  modelos de datos javasript y viseversa.
+tabla-model crear representaciones de tablas sql en  modelos de datos javasript y viseversa.
 
 
 ## uso
 
-para usar sql-model solo es neseario instancear un objeto de la clase principal y agregar los datos
+para usar tabla-model solo es neseario instancear un objeto de la clase principal y agregar los datos
 
 Ejemplo:
 ```js
 // file ./model/test1.js
-const model=require("sql-model")
+const model=require("tabla-model")
 const test1=new model("test3",[
     {
         name:"id",
@@ -69,7 +69,7 @@ Constructor de la clase
 * `config {object|array}`: si el primer parametro es el nombre de una tabla este sera los datos de el modelo *`{colums:Array, foreingKey:Array}`* si es un array se tomara como las columnas en caso de que el primer parametro sea un sentencia sql *CREATE TABLE* este sera el caracter de escape sql
 
 ```js
-const model=require("sql-model")
+const model=require("tabla-model")
 const test1=new model("test3",{
     colums:[
         {
@@ -104,7 +104,7 @@ const test1=new model("test3",{
 })
 ```
 ```js
-const model=require("sql-model")
+const model=require("tabla-model")
 const test1=new model(`create table test1(
     id int not null AUTO_INCREMENT,
     row1 text,
@@ -179,7 +179,7 @@ Retorna el sql nesesario para crear la tabla del modelo
 
 * `config {object}`: configuracion para el helper `{escapeChar:String, reserveIdentifiers:Array, ar_aliased_tables:String, dbprefix:String, escapeString:String}`
 ```js
-const model=require("sql-model")
+const model=require("tabla-model")
 const test1=new model("test3",{
     colums:[
         {
@@ -218,9 +218,9 @@ console.log(test1.sql({escapeString:"`"}))
 
 
 
-[npm-image]: https://img.shields.io/npm/v/sql-model.svg
-[npm-url]: https://npmjs.org/package/sql-model
-[node-version-image]: https://img.shields.io/node/v/sql-model.svg
+[npm-image]: https://img.shields.io/npm/v/tabla-model.svg
+[npm-url]: https://npmjs.org/package/tabla-model
+[node-version-image]: https://img.shields.io/node/v/tabla-model.svg
 [node-version-url]: https://nodejs.org/en/download/
-[downloads-image]: https://img.shields.io/npm/dm/sql-model.svg
-[downloads-url]: https://npmjs.org/package/sql-model
+[downloads-image]: https://img.shields.io/npm/dm/tabla-model.svg
+[downloads-url]: https://npmjs.org/package/tabla-model
