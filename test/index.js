@@ -4,5 +4,6 @@ describe("test de tabla-model",()=>
     require("./sql2Model")
     require("./model2Sql")
     require("./sqlTablaModel")
+    require("./createModel")
     
 })

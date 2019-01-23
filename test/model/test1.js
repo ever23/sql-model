@@ -26,4 +26,5 @@ test1.foreingKey({
     onUpdate:'CASCADE',
     onDelete:'NO ACTION'
 })
+test1.insert(1,'eever',34234,'23/10/95')
 module.exports=test1

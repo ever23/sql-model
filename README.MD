@@ -215,6 +215,11 @@ const test1=new model("test3",{
 console.log(test1.sql({escapeString:"`"}))
 ```
 
+## sqlModel#saveModel(file)
+
+Crea un archivo javascript con los datos del modelo para ser usado 
+
+* `file`: Nombre del fichero donde sera guardado el modelo 
 
 
 

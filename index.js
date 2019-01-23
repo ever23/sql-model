@@ -1,6 +1,7 @@
 const model2Sql = require("./model2Sql")
 const sql2Model = require("./sql2Model")
 const sqlHelpers = require("./sqlHelpers")
+const createModel = require("./createModel")
 /**
 * sqlTablaModel
 * modelo para las tablas sql
@@ -125,6 +126,15 @@ class sqlTablaModel
     sql(config)
     {
         return (new model2Sql(this,config)).sql()
+    }
+    /**
+    * Guarda el modelos en un archiv javascript 
+    * 
+    */
+    saveModel(file)
+    {
+        let creat= new createModel(this)
+        create.save(file)
     }
 
 }

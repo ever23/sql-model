@@ -1,11 +1,15 @@
 {
     "name": "tabla-model",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "crear representaciones de tablas sql en  modelos de datos ",
     "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ever23/tabla-model.git"
+    },
     "scripts": {
         "test": "mocha ./test/index.js",
-        "lint": "eslint ./index.js ./model2Sql.js ./sql2Model.js ./sqlHelpers.js"
+        "lint": "eslint ./index.js ./model2Sql.js ./sql2Model.js ./sqlHelpers.js ./createModel.js"
     },
     "keywords": [
         "sql",
