@@ -133,7 +133,7 @@ class sqlTablaModel
     */
     saveModel(file)
     {
-        let creat= new createModel(this)
+        let create= new createModel(this)
         create.save(file)
     }
 

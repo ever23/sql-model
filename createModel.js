@@ -77,7 +77,7 @@ class createModel
     colum(col)
     {
         let ident="        "
-        let ret = `{\n${ident}    name:"${col.name}",\n${ident}    type:"${col.type}"\n`
+        let ret = `{\n${ident}    name:"${col.name}",\n${ident}    type:"${col.type}",\n`
         if(col.primary)
             ret+=`${ident}    primary:true,\n`
         if(typeof col.defaultNull =="boolean")
@@ -98,7 +98,7 @@ class createModel
     foreingKey(key)
     {
         let ident="        "
-        let ret = `{\n${ident}    key:${JSON.stringify(key.key)},\n${ident}    reference:"${key.reference}"\n`
+        let ret = `{\n${ident}    key:${JSON.stringify(key.key)},\n${ident}    reference:"${key.reference}",\n`
         ret+=`${ident}    keyReference:${JSON.stringify(key.keyReference)},\n`
         if(key.match!=undefined && key.match!='NONE')
             ret+=`${ident}    match:"${key.match}",\n`
